@@ -1,0 +1,150 @@
+<!-- detail.html with enhancements -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Details</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">← Back</button>
+
+    <div class="hero-detail" id="hero-section">
+        <div class="hero-content">
+            <h1 id="person-name"></h1>
+            <p class="years" id="person-years"></p>
+        </div>
+    </div>
+
+    <div class="detail-content">
+        <div class="detail-section">
+            <h2>About</h2>
+            <p id="person-description"></p>
+        </div>
+
+        <div class="detail-section">
+            <h2>Personal Information</h2>
+            <p id="birth-place"></p>
+            <p id="education"></p>
+        </div>
+
+        <div class="detail-section">
+            <h2>Career Timeline</h2>
+            <div class="career-timeline" id="career-timeline">
+                <!-- Career timeline items will be added dynamically -->
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2>Awards and Honors</h2>
+            <ul class="awards-list" id="awards-list">
+                <!-- Awards will be added dynamically -->
+            </ul>
+            <!-- Continuing detail.html -->
+        </div>
+
+        <div class="detail-section">
+            <h2>Major Contributions</h2>
+            <ul class="contributions-list" id="contributions-list">
+                <!-- Contributions will be added dynamically -->
+            </ul>
+        </div>
+        <!-- Quotes Section -->
+        <section class="quotes-section detail-section">
+            <div class="quotes-container">
+                <h2>Famous Quotes</h2>
+                <div id="quotes-list">
+                    <!-- Quotes will be added dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Gallery -->
+        <section class="gallery-section">
+            <h2>Image Gallery</h2>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Images will be added dynamically -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Related Personalities -->
+    <section class="related-section">
+        <div class="related-container">
+            <h2>Related Personalities</h2>
+            <div class="related-grid" id="related-grid">
+                <!-- Related personalities will be added dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Tributes Section -->
+    <section class="tributes-section">
+        <h2>Leave a Tribute</h2>
+        <form class="tribute-form" id="tribute-form">
+            <input type="text" class="tribute-input" placeholder="Your Name" required>
+            <textarea class="tribute-input" placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit" class="tribute-submit">Submit Tribute</button>
+        </form>
+        <div class="tributes-list" id="tributes-list">
+            <!-- Tributes will be added dynamically -->
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Indian Legends Tribute is dedicated to preserving and celebrating the remarkable stories of individuals who have shaped India's history and culture.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Personalities</a></li>
+                    <li><a href="index.html">Categories</a></li>
+                    <li><a href="submitstory.html">Submit a Story</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="footer-social">
+                    <a href="#" class="twitter" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="linkedin" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © 2024 Indian Legends Tribute. All Rights Reserved.
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="dataset.js"></script>
+</body>
+<div id="modal-overlay" class="modal-overlay"></div>
+
+</html>

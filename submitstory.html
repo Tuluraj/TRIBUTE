@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Story | Indian Legends Tribute</title>
+    <style>
+        :root {
+            --primary-color: #ff7675;
+            --secondary-color: #6c5ce7;
+            --text-color: #2d3436;
+            --background-color: #f7f9fc;
+            --card-background: white;
+            --error-color: #ff7675;
+            --success-color: #00b894;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .submit-story-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-story-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control.error {
+            border-color: var(--error-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .upload-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            background: #f5f6fa;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .file-name {
+            color: #636e72;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #e66767;
+        }
+
+        .confirmation-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .confirmation-card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .confirmation-btns {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+        }
+
+        .confirmation-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .confirm-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            background-color: #e66767;
+        }
+
+        .edit-btn {
+            background-color: #74b9ff;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #4aa3ff;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .submit-story-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="submit-story-container">
+        <header class="submit-story-header">
+            <h1>Submit a Legend's Story</h1>
+            <p>Help us preserve and celebrate India's remarkable personalities</p>
+        </header>
+
+        <form id="storySubmissionForm">
+            <div class="form-group">
+                <label for="personName">Name of the Personality*</label>
+                <input type="text" id="personName" class="form-control" required>
+                <div class="error-message" id="personNameError">Please enter the personality's name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category*</label>
+                <select id="category" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <option value="freedom-fighter">Freedom Fighter</option>
+                    <option value="scientist">Scientist</option>
+                    <option value="artist">Artist</option>
+                    <option value="social-reformer">Social Reformer</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error-message" id="categoryError">Please select a category</div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthDate">Birth Date*</label>
+                <input type="date" id="birthDate" class="form-control" required>
+                <div class="error-message" id="birthDateError">Please enter a valid birth date</div>
+            </div>
+
+            <div class="form-group">
+                <label for="deathDate">Death Date (if applicable)</label>
+                <input type="date" id="deathDate" class="form-control">
+                <div class="error-message" id="deathDateError">Death date must be after birth date</div>
+            </div>
+
+            <div class="form-group">
+                <label for="contribution">Contribution*</label>
+                <textarea id="contribution" class="form-control" rows="4" required></textarea>
+                <div class="error-message" id="contributionError">Please describe their contribution</div>
+            </div>
+
+            <div class="form-group">
+                <label for="source">Source (Website or Reference)</label>
+                <input type="url" id="source" class="form-control" placeholder="https://example.com">
+                <div class="error-message" id="sourceError">Please enter a valid URL</div>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Image (Optional)</label>
+                <div class="upload-section">
+                    <input type="file" id="imageUpload" class="file-input" accept="image/*">
+                    <label for="imageUpload" class="file-label">Choose File</label>
+                    <span class="file-name" id="fileName">No file chosen</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="submitterName">Your Name*</label>
+                <input type="text" id="submitterName" class="form-control" required>
+                <div class="error-message" id="submitterNameError">Please enter your name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="submitterEmail">Your Email*</label>
+                <input type="email" id="submitterEmail" class="form-control" required>
+                <div class="error-message" id="submitterEmailError">Please enter a valid email address</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Story</button>
+        </form>
+    </div>
+
+    <div class="confirmation-card" id="confirmationCard">
+        <h2>Confirm Your Details</h2>
+        <div id="confirmationDetails"></div>
+        <div class="confirmation-btns">
+            <button class="confirmation-btn edit-btn" id="editBtn">Edit</button>
+            <button class="confirmation-btn confirm-btn" id="confirmBtn">Confirm</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="success-message" id="successMessage">Story submitted successfully!</div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Indian Legends Tribute is dedicated to preserving and celebrating the remarkable stories of individuals who have shaped India's history and culture.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Personalities</a></li>
+                    <li><a href="index.html">Categories</a></li>
+                    <li><a href="submitstory.html">Submit a Story</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="footer-social">
+                    <a href="#" class="twitter" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="linkedin" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © 2024 Indian Legends Tribute. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('storySubmissionForm');
+            const imageUpload = document.getElementById('imageUpload');
+            const fileName = document.getElementById('fileName');
+            const confirmationCard = document.getElementById('confirmationCard');
+            const overlay = document.getElementById('overlay');
+            const confirmationDetails = document.getElementById('confirmationDetails');
+            const editBtn = document.getElementById('editBtn');
+            const confirmBtn = document.getElementById('confirmBtn');
+            const successMessage = document.getElementById('successMessage');
+
+            // File upload name display
+            imageUpload.addEventListener('change', function() {
+                fileName.textContent = this.files[0] ? this.files[0].name : 'No file chosen';
+            });
+
+            // Validation functions
+            function validateField(field, errorElement) {
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                field.classList.remove('error');
+                errorElement.style.display = 'none';
+                return true;
+            }
+
+            function validateEmail(emailField, errorElement) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailField.value)) {
+                    emailField.classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                emailField.classList.remove('error');
+                errorElement.style.display = 'none';
+                return true;
+            }
+
+            function validateDates(birthDate, deathDate, deathDateError) {
+                if (deathDate.value && new Date(birthDate.value) >= new Date(deathDate.value)) {
+                    deathDate.classList.add('error');
+                    deathDateError.style.display = 'block';
+                    return false;
+                }
+                deathDate.classList.remove('error');
+                deathDateError.style.display = 'none';
+                return true;
+            }
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const fields = {
+                    personName: document.getElementById('personName'),
+                    category: document.getElementById('category'),
+                    birthDate: document.getElementById('birthDate'),
+                    deathDate: document.getElementById('deathDate'),
+                    contribution: document.getElementById('contribution'),
+                    source: document.getElementById('source'),
+                    submitterName: document.getElementById('submitterName'),
+                    submitterEmail: document.getElementById('submitterEmail')
+                };
+
+                const errors = {
+                    personName: document.getElementById('personNameError'),
+                    category: document.getElementById('categoryError'),
+                    birthDate: document.getElementById('birthDateError'),
+                    deathDate: document.getElementById('deathDateError'),
+                    contribution: document.getElementById('contributionError'),
+                    source: document.getElementById('sourceError'),
+                    submitterName: document.getElementById('submitterNameError'),
+                    submitterEmail: document.getElementById('submitterEmailError')
+                };
+
+                // Perform validations
+                const isValid = 
+                    validateField(fields.personName, errors.personName) &&
+                    validateField(fields.category, errors.category) &&
+                    validateField(fields.birthDate, errors.birthDate) &&
+                    validateField(fields.contribution, errors.contribution) &&
+                    validateField(fields.submitterName, errors.submitterName) &&
+                    validateEmail(fields.submitterEmail, errors.submitterEmail) &&
+                    validateDates(fields.birthDate, fields.deathDate, errors.deathDate);
+
+                if (isValid) {
+                    // Display data in confirmation card
+                    confirmationDetails.innerHTML = `
+                        <p><strong>Name:</strong> ${fields.personName.value}</p>
+                        <p><strong>Category:</strong> ${fields.category.value}</p>
+                        <p><strong>Birth Date:</strong> ${fields.birthDate.value}</p>
+                        <p><strong>Death Date:</strong> ${fields.deathDate.value || "N/A"}</p>
+                        <p><strong>Contribution:</strong> ${fields.contribution.value}</p>
+                        <p><strong>Source:</strong> ${fields.source.value || "N/A"}</p>
+                        <p><strong>Submitted By:</strong> ${fields.submitterName.value}</p>
+                        <p><strong>Email:</strong> ${fields.submitterEmail.value}</p>
+                    `;
+
+                    confirmationCard.style.display = 'block';
+                    overlay.style.display = 'block';
+                }
+            });
+
+            // Edit button handler
+            editBtn.addEventListener('click', () => {
+                confirmationCard.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+
+            // Confirm button handler
+            confirmBtn.addEventListener('click', () => {
+                confirmationCard.style.display = 'none';
+                overlay.style.display = 'none';
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+
+                // Reset form
+                form.reset();
+                fileName.textContent = 'No file chosen';
+            });
+        });
+    </script>
+</body>
+</html>

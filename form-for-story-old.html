@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Story | Indian Legends Tribute</title>
+    <style>
+        /* Reusing existing CSS variables and global styles */
+        :root {
+            --primary-color: #ff7675;
+            --secondary-color: #6c5ce7;
+            --text-color: #2d3436;
+            --background-color: #f7f9fc;
+            --card-background: white;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .submit-story-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-story-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control.error {
+            border-color: #ff7675;
+        }
+
+        .error-message {
+            color: #ff7675;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #e66767;
+        }
+
+        .upload-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            background: #f5f6fa;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .file-name {
+            color: #636e72;
+        }
+
+        @media (max-width: 768px) {
+            .submit-story-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="submit-story-container">
+        <header class="submit-story-header">
+            <h1>Submit a Legend's Story</h1>
+            <p>Help us preserve and celebrate India's remarkable personalities</p>
+        </header>
+
+        <form id="storySubmissionForm">
+            <div class="form-group">
+                <label for="personName">Name of the Personality</label>
+                <input type="text" id="personName" class="form-control" required>
+                <div class="error-message" id="personNameError">Please enter the personality's name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <option value="freedom-fighter">Freedom Fighter</option>
+                    <option value="scientist">Scientist</option>
+                    <option value="artist">Artist</option>
+                    <option value="social-reformer">Social Reformer</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error-message" id="categoryError">Please select a category</div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthYear">Birth Year</label>
+                <input type="number" id="birthYear" class="form-control" min="1800" max="2024" required>
+                <div class="error-message" id="birthYearError">Please enter a valid birth year</div>
+            </div>
+
+            <div class="form-group">
+                <label for="storyDescription">Story Description</label>
+                <textarea id="storyDescription" class="form-control" rows="5" required></textarea>
+                <div class="error-message" id="storyDescriptionError">Please provide a story description</div>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Image (Optional)</label>
+                <div class="upload-section">
+                    <input type="file" id="imageUpload" class="file-input" accept="image/*">
+                    <label for="imageUpload" class="file-label">Choose File</label>
+                    <span class="file-name" id="fileName">No file chosen</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="submitterName">Your Name</label>
+                <input type="text" id="submitterName" class="form-control" required>
+                <div class="error-message" id="submitterNameError">Please enter your name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="submitterEmail">Your Email</label>
+                <input type="email" id="submitterEmail" class="form-control" required>
+                <div class="error-message" id="submitterEmailError">Please enter a valid email address</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Story</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('storySubmissionForm');
+            const imageUpload = document.getElementById('imageUpload');
+            const fileName = document.getElementById('fileName');
+
+            // File upload name display
+            imageUpload.addEventListener('change', function() {
+                fileName.textContent = this.files[0] ? this.files[0].name : 'No file chosen';
+            });
+
+            // Form validation function
+            function validateField(field, errorElement) {
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    field.classList.remove('error');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Email validation
+            function validateEmail(emailField, errorElement) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailField.value)) {
+                    emailField.classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    emailField.classList.remove('error');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Birth year validation
+            function validateBirthYear(birthYearField, errorElement) {
+                const year = parseInt(birthYearField.value);
+                if (isNaN(year) || year < 1700 || year > 2024) {
+                    birthYearField.classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    birthYearField.classList.remove('error');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const personName = document.getElementById('personName');
+                const personNameError = document.getElementById('personNameError');
+                const category = document.getElementById('category');
+                const categoryError = document.getElementById('categoryError');
+                const birthYear = document.getElementById('birthYear');
+                const birthYearError = document.getElementById('birthYearError');
+                const storyDescription = document.getElementById('storyDescription');
+                const storyDescriptionError = document.getElementById('storyDescriptionError');
+                const submitterName = document.getElementById('submitterName');
+                const submitterNameError = document.getElementById('submitterNameError');
+                const submitterEmail = document.getElementById('submitterEmail');
+                const submitterEmailError = document.getElementById('submitterEmailError');
+
+                // Perform validations
+                const isPersonNameValid = validateField(personName, personNameError);
+                const isCategoryValid = validateField(category, categoryError);
+                const isBirthYearValid = validateBirthYear(birthYear, birthYearError);
+                const isStoryDescriptionValid = validateField(storyDescription, storyDescriptionError);
+                const isSubmitterNameValid = validateField(submitterName, submitterNameError);
+                const isEmailValid = validateEmail(submitterEmail, submitterEmailError);
+
+                // If all validations pass
+                if (isPersonNameValid && isCategoryValid && isBirthYearValid && 
+                    isStoryDescriptionValid && isSubmitterNameValid && isEmailValid) {
+                    
+                    // Collect form data
+                    const formData = {
+                        personName: personName.value,
+                        category: category.value,
+                        birthYear: birthYear.value,
+                        storyDescription: storyDescription.value,
+                        submitterName: submitterName.value,
+                        submitterEmail: submitterEmail.value,
+                        image: imageUpload.files[0] ? imageUpload.files[0].name : null
+                    };
+
+                    // Simulated submission (replace with actual submission logic)
+                    alert('Story submitted successfully!\n' + JSON.stringify(formData, null, 2));
+                    
+                    // Reset form
+                    form.reset();
+                    fileName.textContent = 'No file chosen';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
