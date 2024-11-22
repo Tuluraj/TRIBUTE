@@ -69,5 +69,5 @@ This project is licensed under the MIT License - see the `LICENSE.md` file for d
 
 ## Contact
 - Tuluraj Sahu
-- Project Link: [https://github.com/Tuluraj/indian-personalities-tribute](https://github.com/tj_sahu/indian-personalities-tribute)
+- Project Link: [https://github.com/Tuluraj/TRIBUTE.git](https://github.com/Tuluraj/TRIBUTE.git)
 ```
