@@ -857,6 +857,11 @@ body.modal-open {
     color: var(--footer-link);
     font-size: 0.9rem;
 }
+.footer-bottom a{
+    text-decoration: none;
+    color: #e2a3a3;
+    font-weight: bold;
+}
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
